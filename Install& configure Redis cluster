@@ -1,0 +1,37 @@
+#1 install Redis on RED HAT
+
+Connec to Linux box using putty termila window 
+
+execute these command to install pre redis 
+sudo yum install redis
+sudo systemctl enable redis
+sudo system start redis
+
+
+#2: Setup Redis cacahe cluster
+
+create a baic redis config file 
+
+# basic redis.conf file
+port 7000
+daemonize yes 
+cluster-enabled yes
+cluster-config-file nodes.conf
+cluster-node-timeout 5000
+protected-mode no
+bind 127.0.0.1:: linux server ip
+appendonly yes
+
+
+# create as many number of ports needed , here we are targeting 3 master slave sturcture, so i have 6 ports configured with same redi.config file port 7000 to 7005
+
+# create a cluster 
+redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 \
+127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 \
+--cluster-replicas 1
+
+# redis-cli -p 7000 -c # will allow you yo interact with redis clusters 
+try Set & get Keys 
+Set Name Velu
+Get Name
+
